@@ -1,0 +1,7 @@
+{
+  "name": "hously",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
