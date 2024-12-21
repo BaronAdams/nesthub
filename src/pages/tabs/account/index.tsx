@@ -72,7 +72,7 @@ const Account = () => {
           <IonListHeader lines="inset">
             <IonLabel className='text-[22px] font-medium'>Mon espace</IonLabel>
           </IonListHeader>
-          <IonItem className='hover:bg-slate-600'>
+          <IonItem routerLink='/tabs/account/profile' className='hover:bg-slate-600'>
             <IonIcon icon={personOutline} className='mr-3' />
             <IonLabel>Mon profil</IonLabel>
           </IonItem>

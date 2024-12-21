@@ -7,6 +7,7 @@ import {
     IonTabs,
 } from '@ionic/react';
 import { homeOutline, mailOutline, bookmarkOutline, notificationsOutline } from 'ionicons/icons';
+import { useAuth } from '@/lib/context/AuthContext';
 import Home from './home';
 import Chat from './chat';
 import Saved from './saved';
@@ -14,8 +15,8 @@ import Notifications from './notifications';
 import Account from './account';
 import ProfileSettings from './account/profile-settings';
 import ProtectedRoute from '@/components/layout/protected';
-import { useAuth } from '@/lib/context/AuthContext';
 import AccountTabIcon from '@/components/partials/account-tab-icon';
+import Profile from './account/profile';
 
 const Tabs: React.FC = () => {
     const { loading, error } = useAuth()
@@ -47,6 +48,11 @@ const Tabs: React.FC = () => {
                 <Route exact path="/tabs/account/profile-settings">
                     <ProtectedRoute>
                         <ProfileSettings />
+                    </ProtectedRoute>
+                </Route>
+                <Route exact path="/tabs/account/profile">
+                    <ProtectedRoute>
+                        <Profile />
                     </ProtectedRoute>
                 </Route>
                 <Route exact path="/tabs">

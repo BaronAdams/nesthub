@@ -18,15 +18,15 @@ const ProfileSettings = () => {
                                 <div className="p-6 relative rounded-md shadow dark:border-[0.0009px] dark:border-white border-[0.9px] border-slate-200 bg-white dark:bg-transparent">
                                     <div className="profile-pic text-center">
                                         {/**@ts-ignore */}
-                                        <input id="pro-img" onChange={(e)=> setFile(e.target.files[0])} name="profile-image" type="file" className="hidden"/>
+                                        <input id="pro-img" onChange={(e) => setFile(e.target.files[0])} name="profile-image" type="file" className="hidden" />
                                         <div>
                                             <div className="relative size-24 mx-auto">
-                                                {file ? (<img src={URL.createObjectURL(file)} className="rounded-full shadow dark:border-[0.0009px] dark:border-white border-[0.9px] border-slate-200 ring-4 ring-slate-50 dark:ring-slate-800" id="profile-image" alt={authState?.user?.firstName+" "+authState?.user?.lastName+" "+"image"} />)
-                                                 : (authState.user?.profilePic ? <img src={authState.user?.profilePic} className="rounded-full shadow dark:border-[0.0009px] dark:border-white border-[0.9px] border-slate-200 ring-4 ring-slate-50 dark:ring-slate-800" id="profile-image" alt={authState?.user?.firstName+" "+authState?.user?.lastName+" "+"image"} />
-                                                    : <div className="flex justify-center items-center rounded-full size-24 shadow dark:border-[0.0009px] dark:border-white border-[0.9px] border-slate-200 ring-4 ring-slate-50 dark:ring-slate-800">
-                                                        <IonIcon icon={camera} className='text-[24px] ' />
-                                                    </div>
-                                                 )
+                                                {file ? (<img src={URL.createObjectURL(file)} className="rounded-full shadow dark:border-[0.0009px] dark:border-white border-[0.9px] border-slate-200 ring-4 ring-slate-50 dark:ring-slate-800" id="profile-image" alt={authState?.user?.firstName + " " + authState?.user?.lastName + " " + "image"} />)
+                                                    : (authState.user?.profilePic ? <img src={authState.user?.profilePic} className="rounded-full shadow dark:border-[0.0009px] dark:border-white border-[0.9px] border-slate-200 ring-4 ring-slate-50 dark:ring-slate-800" id="profile-image" alt={authState?.user?.firstName + " " + authState?.user?.lastName + " " + "image"} />
+                                                        : <div className="flex justify-center items-center rounded-full size-24 shadow dark:border-[0.0009px] dark:border-white border-[0.9px] border-slate-200 ring-4 ring-slate-50 dark:ring-slate-800">
+                                                            <IonIcon icon={camera} className='text-[24px] ' />
+                                                        </div>
+                                                    )
                                                 }
                                                 <label className="absolute inset-0 cursor-pointer" htmlFor="pro-img"></label>
                                             </div>
@@ -56,7 +56,7 @@ const ProfileSettings = () => {
                                                 <div>
                                                     <label className="form-label font-medium">Votre Nom</label>
                                                     <div className="form-icon relative mt-2">
-                                                    <IonIcon icon={person} className="size-4 absolute top-3 start-4" />
+                                                        <IonIcon icon={person} className="size-4 absolute top-3 start-4" />
                                                         <input type="text" defaultValue={authState?.user?.lastName} className="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-transparent dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-green-600 dark:border-gray-800 dark:focus:border-green-600 focus:ring-0" placeholder="Last Name:" id="lastname" name="name" required />
                                                     </div>
                                                 </div>

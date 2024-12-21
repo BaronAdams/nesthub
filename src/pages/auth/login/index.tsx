@@ -11,8 +11,8 @@ const Login = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         let formData = new FormData(e.target as HTMLFormElement)
-        const email = formData.get('email') as string
-        const password = formData.get('password') as string
+        const email = formData.get('LoginEmail') ? String(formData.get('LoginEmail')) : null
+        const password = formData.get('LoginPassword') ? String(formData.get('LoginPassword')) : null
         // @ts-ignore
         startTransition(async () => {
             let err = await login({ email, password })
@@ -33,15 +33,15 @@ const Login = () => {
                             <div className="grid grid-cols-1">
                                 <div className="mb-4">
                                     <label htmlFor="LoginEmail" className="font-medium">Votre adresse email</label>
-                                    <input name='email' id="LoginEmail" type="email" className="form-input mt-3" placeholder="name@example.com" />
-                                    {error?.email && (<span className='text-red-500 mt-2'> {error.email} </span>)}
+                                    <input name='LoginEmail' id="LoginEmail" type="email" className="form-input mt-2" placeholder="name@example.com" />
+                                    {error?.email && (<div className='text-red-500 mt-[5px]'> {error.email} </div>)}
                                 </div>
 
                                 <div className="mb-4">
                                     <label htmlFor="LoginPassword" className="font-medium">Mot de passe</label>
-                                    <input name='password' id="LoginPassword" type="password" className="form-input mt-3" placeholder="Password:" />
-                                    {error?.password && (<span className='text-red-500 mt-2'> {error.password} </span>)}
-                                    {error?.message && (<span className='text-red-500 mt-4'> {error.message} </span>)}
+                                    <input name='LoginPassword' id="LoginPassword" type="password" className="form-input mt-2" placeholder="Password:" />
+                                    {error?.password && (<div className='text-red-500 mt-[5px]'> {error.password} </div>)}
+                                    {error?.message && (<div className='text-red-500 mt-[5px]'> {error.message} </div>)}
                                 </div>
 
                                 <div className="flex justify-between mb-4">

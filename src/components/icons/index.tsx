@@ -44,3 +44,56 @@ export function HallIcon(props: SVGProps<SVGSVGElement>) {
 export function VillaIcon(props: SVGProps<SVGSVGElement>) {
 	return (<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M4 20V8.692l11.23-4.326V13h1.693q0-.635.452-1.086q.451-.453 1.085-.453t1.087.452T20 13v7zm1-1h5v-6h4.23V5.804L5 9.375zm6 0h3.23v-2.308h1.54V19H19v-5h-8zm4-.654"></path></svg>);
 }
+
+export const ThreeCirclesWithArcs = ({ size = 100, color = "black" }) => {
+	const centerX = size / 2; // Centre de l'icône (horizontal)
+	const centerY = size / 2; // Centre de l'icône (vertical)
+	const arcRadius = size / 2.5; // Rayon de l'arc
+	const circleRadius = size / 20; // Rayon des cercles
+  
+	return (
+	  <svg
+		width={size}
+		height={size}
+		viewBox={`0 0 ${size} ${size}`}
+		xmlns="http://www.w3.org/2000/svg"
+	  >
+		{/* Cercle gauche */}
+		<circle
+		  cx={centerX - arcRadius}
+		  cy={centerY}
+		  r={circleRadius}
+		  fill={color}
+		/>
+  
+		{/* Cercle central (haut de l'arc) */}
+		<circle
+		  cx={centerX}
+		  cy={centerY - arcRadius}
+		  r={circleRadius}
+		  fill={color}
+		/>
+  
+		{/* Cercle droit */}
+		<circle
+		  cx={centerX + arcRadius}
+		  cy={centerY}
+		  r={circleRadius}
+		  fill={color}
+		/>
+  
+		{/* Arc circulaire ouvert */}
+		<path
+		  d={`
+			M ${centerX - arcRadius} ${centerY}
+			A ${arcRadius} ${arcRadius} 0 0 1 ${centerX + arcRadius} ${centerY}
+		  `}
+		  stroke={color}
+		  strokeWidth="3"
+		  fill="none"
+		/>
+	  </svg>
+  );
+};
+
+

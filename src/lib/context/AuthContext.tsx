@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { Preferences } from '@capacitor/preferences';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 import { ErrorAuthFields } from '../types';
-import { loginCredentialsSchema } from '../validators/zod-schemas';
+import { loginCredentialsSchema, registerCredentialsSchema } from '../validators/zod-schemas';
 import { useIonRouter } from '@ionic/react';
 import { z } from "zod"
 import { io } from "socket.io-client";
@@ -34,15 +34,17 @@ const removeToken = async () => {
 };
 
 interface registerBody {
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string
+    email: string | null,
+    password: string | null,
+    firstName: string | null,
+    lastName: string | null,
+    phone: string | null,
+    location: string | null
 }
 
 interface loginBody {
-    email: string,
-    password: string
+    email: string | null,
+    password: string | null
 }
 
 interface AuthProps {
@@ -127,6 +129,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const register = async (credentials: registerBody) => {
         let error: ErrorAuthFields = {};
+
+        try {
+            registerCredentialsSchema.parse(credentials);
+        } catch (err) {
+            if (err instanceof z.ZodError) {
+                for (let iss of err.issues) {
+                    error = { ...error, [iss.path[0]]: iss.message }
+                }
+                return error
+            }
+        }
+
         try {
             const response = await fetch(`${apiUrl}/auth/register`, {
                 method: "POST",

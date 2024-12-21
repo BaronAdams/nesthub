@@ -2,6 +2,12 @@ import { IonIcon } from '@ionic/react';
 import { star, bed, heart, radioButtonOn, starHalf, starOutline } from 'ionicons/icons';
 import { BathIcon, PinIcon } from '@/components/icons';
 import { IProperty, properties } from '@/data';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import './style.css'
+
 
 function Property({ property }: { property: IProperty }) {
     // let color = 'cyan'
@@ -11,12 +17,31 @@ function Property({ property }: { property: IProperty }) {
         <div className="w-[95%] group rounded-xl bg-white dark:bg-[#1c1c1d] shadow hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 overflow-hidden ease-in-out duration-500 mx-auto">
             <div className="md:flex">
                 <div className="relative md:shrink-0">
-                    <img className="size-full object-cover md:w-48" src={property.img} alt="something" />
-                    <div className="absolute top-4 end-4">
-                        <span className="btn btn-icon bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-full text-slate-100 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 hover:cursor-pointer dark:hover:text-red-600">
-                            <IonIcon icon={heart} className="text-[20px]" />
-                        </span>
-                    </div>
+                    <Swiper
+                        spaceBetween={30}
+                        centeredSlides={true}
+                        loop={true}
+                        autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        modules={[Autoplay, Pagination]}
+                        className="mySwiper relative z-10"
+                    >
+                        <div className="absolute z-100 top-4 end-4">
+                            <span className="btn btn-icon z-100 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-full text-slate-100 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 hover:cursor-pointer dark:hover:text-red-600">
+                                <IonIcon icon={heart} className="text-[20px]" />
+                            </span>
+                        </div>
+                        <SwiperSlide className="z-10" ><img className="size-full object-cover rounded-xl md:w-48" src={property.img} alt="something" /></SwiperSlide>
+                        <SwiperSlide className="z-10" ><img className="size-full object-cover rounded-xl md:w-48" src={property.img} alt="something" /></SwiperSlide>
+                        <SwiperSlide className="z-10" ><img className="size-full object-cover rounded-xl md:w-48" src={property.img} alt="something" /></SwiperSlide>
+                        <SwiperSlide className="z-10" ><img className="size-full object-cover rounded-xl md:w-48" src={property.img} alt="something" /></SwiperSlide>
+                        <SwiperSlide className="z-10" ><img className="size-full object-cover rounded-xl md:w-48" src={property.img} alt="something" /></SwiperSlide>
+                    </Swiper>
                 </div>
                 <div className="p-6 w-full">
                     <div className="pb-3">
@@ -45,7 +70,7 @@ function Property({ property }: { property: IProperty }) {
 
                         <li className="flex items-center">
                             {/* <IonIcon icon={bed} className='text-blue-500 mr-2' /> */}
-                            <BathIcon className='text-blue-500 text-[16px] mr-2'/>
+                            <BathIcon className='text-blue-500 text-[16px] mr-2' />
                             <span className='dark:text-white'>{property.bath} sdbs</span>
                         </li>
                     </ul>
@@ -59,12 +84,12 @@ function Property({ property }: { property: IProperty }) {
                         <li>
                             <span className="text-slate-400">Etoiles</span>
                             <ul className="text-lg font-medium text-amber-400 list-none">
-                                {Array(property.detailStars.fillStars).fill(0).map((elt,index)=>(
-                                    <li key={index} className="inline"><IonIcon icon={star}/></li>)
+                                {Array(property.detailStars.fillStars).fill(0).map((elt, index) => (
+                                    <li key={index} className="inline"><IonIcon icon={star} /></li>)
                                 )}
-                                {property.detailStars.hasHalfStar && <li className="inline"><IonIcon icon={starHalf}/></li> }
-                                {Array(property.detailStars.emptyStars).fill(0).map((elt,index)=>(
-                                    <li key={index} className="inline"><IonIcon icon={starOutline}/></li>)
+                                {property.detailStars.hasHalfStar && <li className="inline"><IonIcon icon={starHalf} /></li>}
+                                {Array(property.detailStars.emptyStars).fill(0).map((elt, index) => (
+                                    <li key={index} className="inline"><IonIcon icon={starOutline} /></li>)
                                 )}
                                 <li className="inline ml-2 text-black dark:text-white">{`${property.rawStars}`}({property.reviewers})</li>
                             </ul>
@@ -78,11 +103,11 @@ function Property({ property }: { property: IProperty }) {
 
 const Properties = () => {
     return (
-        <div className="w-screen grid justify-start items-center lg:grid-cols-2 grid-cols-1 gap-[15px] mt-8">
+        <div className="w-screen grid justify-start items-center lg:grid-cols-2 grid-cols-1 gap-[15px] mt-3">
             <h3 className="w-[95%] pl-4 md:text-3xl md:leading-normal text-xl text-[21.6px] leading-normal font-semibold">
-                Disponibles pour vous 
+                Disponibles pour vous
             </h3>
-            {properties.map((el,index) => (
+            {properties.map((el, index) => (
                 <Property key={`${el.title}-${index}`} property={el} />
             ))}
         </div>

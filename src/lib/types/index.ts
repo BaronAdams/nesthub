@@ -1,7 +1,9 @@
 export type ErrorAuthFields = {
-    name?: string,
-    username?: string,
+    firstName?: string,
+    lastName?: string,
     email?: string,
     password?: string,
+    location?:string,
+    phone?:string,
     message?: string
 }
