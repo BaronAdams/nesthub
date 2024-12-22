@@ -1,3 +1,3 @@
 # Application immobilière Nesthub
 
-![Page d'accueil de l'application](nesthub-home-front-portrait.png)
+<img src="./public/images/nesthub-home-front-portrait.png" alt="Logo de l'application" width="200" />
