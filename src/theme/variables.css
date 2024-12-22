@@ -106,4 +106,7 @@ http://ionicframework.com/docs/theming/ */
 .ion-palette-dark.md ion-header{
   background: #1c1c1d;
 }
+.inner-scroll::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, Edge */
+}
 

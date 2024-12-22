@@ -86,7 +86,7 @@ export const propertyTypes = [
 
 export const properties: IProperty[] = [
     {
-        title: "914 FUWBU POINT, Earl Sharp Ovuweki, KP",
+        title: "914 FUWBU POINT, Earl Sharp Ovuweki",
         img: "/property/1.jpg",
         rawStars: "4.5",
         area: 152,
