@@ -1,7 +1,10 @@
 .swiper-button-next, .swiper-button-prev{
     @apply hidden;
 }
-.next{
-    @apply min-h-screen overflow-y-scroll;
+.swiper-slide{
+    @apply overflow-y-scroll overflow-x-hidden;
     /* @layer max-w-[547px]:h-full; */
+}
+.swiper-wrapper{
+    @apply h-screen;
 }

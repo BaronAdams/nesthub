@@ -1,3 +1,4 @@
+import React, { lazy, Suspense } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import {
     IonIcon,
@@ -6,7 +7,7 @@ import {
     IonTabButton,
     IonTabs,
 } from '@ionic/react';
-import { homeOutline, mailOutline, bookmarkOutline, notificationsOutline } from 'ionicons/icons';
+import { homeOutline, mailOutline, bookmarkOutline, notificationsOutline, gridOutline } from 'ionicons/icons';
 import { useAuth } from '@/lib/context/AuthContext';
 import Home from './home';
 import Chat from './chat';
@@ -17,14 +18,25 @@ import ProfileSettings from './account/profile-settings';
 import ProtectedRoute from '@/components/layout/protected';
 import AccountTabIcon from '@/components/partials/account-tab-icon';
 import Profile from './account/profile';
+import Dashboard from './dashboard';
+// const Dashboard = lazy(()=> import('./dashboard')) ;
+import { LoadingTabs } from '@/App';
 
 const Tabs: React.FC = () => {
-    const { loading, error } = useAuth()
+    const { loading, error, authState } = useAuth()
 
     return (
         <IonTabs>
             <IonRouterOutlet>
                 <Route exact path="/tabs/home" component={Home} />
+                <Route exact path="/tabs/dashboard">
+                    <ProtectedRoute canSellOrAdmin={true}>
+                    {/* <Suspense fallback={<LoadingTabs/>} > */}
+                    {/* @ts-ignore */}
+                        <Dashboard />
+                    {/* </Suspense> */}
+                    </ProtectedRoute>
+                </Route>
                 <Route exact path="/tabs/chat">
                     <ProtectedRoute>
                         <Chat />
@@ -56,33 +68,40 @@ const Tabs: React.FC = () => {
                     </ProtectedRoute>
                 </Route>
                 <Route exact path="/tabs">
-                    <Redirect to="/tabs/home" />
+                    { authState.user?.role === "seller" || authState.user?.role === "admin" 
+                     ? <Redirect to="/tabs/dashboard" /> : <Redirect to="/tabs/home" />
+                    }
+                    
                 </Route>
             </IonRouterOutlet>
 
             {!loading && !error && (
                 <IonTabBar slot="bottom" >
-                    <IonTabButton className='mt-[6.5px]' tab="home" href="/tabs/home">
+                    {authState.user?.role === "seller" || authState.user?.role === "admin" ? 
+                    (<IonTabButton className='my-[6.5px]' tab="home" href="/tabs/dashboard">
+                        <IonIcon aria-hidden="true" icon={gridOutline} />
+                    </IonTabButton>) : 
+                    (<IonTabButton className='my-[6.5px]' tab="home" href="/tabs/home">
                         <IonIcon aria-hidden="true" icon={homeOutline} />
-                        {/* <IonLabel style={{ fontFamily: "League Spartan, sans-serif", fontSize: 13.4 }}>Accueil</IonLabel> */}
-                    </IonTabButton>
-                    <IonTabButton className='mt-[6.5px]' tab="chat" href="/tabs/chat">
+                    </IonTabButton>)}
+                    
+                    <IonTabButton className='my-[6.5px]' tab="chat" href="/tabs/chat">
                         <IonIcon aria-hidden="true" icon={mailOutline} />
                         {/* <IonLabel style={{ fontFamily: "League Spartan, sans-serif", fontSize: 13.4 }}>Messages</IonLabel> */}
                     </IonTabButton>
-                    <IonTabButton className='mt-[6.5px]' tab="saved" href="/tabs/saved">
+                    <IonTabButton className='my-[6.5px]' tab="saved" href="/tabs/saved">
                         <IonIcon aria-hidden="true" icon={bookmarkOutline} />
                         {/* <IonLabel style={{ fontFamily: "League Spartan, sans-serif", fontSize: 13.4 }}>Enregistré<s></s></IonLabel> */}
                     </IonTabButton>
-                    <IonTabButton className='mt-[6.5px]' tab="notifications" href="/tabs/notifications">
+                    <IonTabButton className='my-[6.5px]' tab="notifications" href="/tabs/notifications">
                         <IonIcon aria-hidden="true" icon={notificationsOutline} />
                         {/* <IonLabel style={{ fontFamily: "League Spartan, sans-serif", fontSize: 13.4 }}>Notif.</IonLabel> */}
                     </IonTabButton>
-                    <IonTabButton className='mt-[6.5px]' tab="account" href="/tabs/account">
+                    <IonTabButton className='my-[6.5px]' tab="account" href="/tabs/account">
                         <AccountTabIcon />
                         {/* <IonLabel style={{ fontFamily: "League Spartan, sans-serif", fontSize: 13.4 }}>Compte</IonLabel> */}
                     </IonTabButton>
-                    {/* <IonTabButton className='mt-[6.5px]' tab="tab3" href="/tabs/tab3">
+                    {/* <IonTabButton className='my-[6.5px]' tab="tab3" href="/tabs/tab3">
                     <IonIcon aria-hidden="true" icon={settingsOutline} />
                     <IonLabel style={{ fontFamily: "League Spartan, sans-serif", fontSize: 13.4 }}>Paramètres</IonLabel>
                 </IonTabButton> */}

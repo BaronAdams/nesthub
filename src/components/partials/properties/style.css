@@ -1,3 +1,18 @@
 .swiper-pagination-bullet-active{
     background-color: #3b82f6;
 }
+
+.action-sheet-group> .action-sheet-button:nth-child(1) .action-sheet-icon {
+    @apply text-red-600
+  }
+  
+  /* Icône spécifique pour "Delete Item" */
+.action-sheet-group> .action-sheet-button:nth-child(2) .action-sheet-icon {
+    @apply text-blue-600
+}
+  
+.action-sheet-group-cancel> .action-sheet-button:nth-child(1) .action-sheet-icon {
+    @apply text-slate-200
+}
+  
+  /* Icône spécifique pour "Cancel" */

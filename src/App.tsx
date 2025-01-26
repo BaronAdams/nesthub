@@ -1,5 +1,5 @@
 import { Route, Redirect } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonSpinner, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,18 +26,29 @@ import '@ionic/react/css/display.css';
  */
 
 /* import '@ionic/react/css/palettes/dark.always.css'; */
-import '@ionic/react/css/palettes/dark.class.css'; 
+import '@ionic/react/css/palettes/dark.class.css';
 // import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
 import './index.css';
 import { AuthProvider } from './lib/context/AuthContext';
-import Tabs from './pages/tabs';
+import { lazy, Suspense } from 'react';
+// import Tabs from './pages/tabs';
+const Tabs = lazy(() => import('./pages/tabs'));
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 
 setupIonicReact();
+
+export const LoadingTabs: React.FC = () => {
+  return (
+    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <IonSpinner className='mr-3 w-[34px] h-[34px] '></IonSpinner>
+      <span style={{ fontSize: 18, fontFamily: 'League Spartan, sans-serif' }}>Veuillez patienter...</span>
+    </div>
+  )
+}
 
 const App: React.FC = () => {
   return (
@@ -47,7 +58,11 @@ const App: React.FC = () => {
           <AuthProvider>
             <Route path="/auth/login" component={Login} />
             <Route path="/auth/register" component={Register} />
-            <Route path="/tabs" component={Tabs} />
+            <Route path="/tabs">
+              <Suspense fallback={<LoadingTabs/>}>
+                <Tabs />
+              </Suspense>
+            </Route>
             <Route exact path="/">
               <Redirect to="/tabs" />
             </Route>

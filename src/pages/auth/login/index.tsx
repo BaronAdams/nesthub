@@ -8,16 +8,19 @@ const Login = () => {
     const [error, setError] = useState<any>(undefined)
     const { login } = useAuth()
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         let formData = new FormData(e.target as HTMLFormElement)
         const email = formData.get('LoginEmail') ? String(formData.get('LoginEmail')) : null
         const password = formData.get('LoginPassword') ? String(formData.get('LoginPassword')) : null
         // @ts-ignore
         startTransition(async () => {
-            let err = await login({ email, password })
-            if (err) {
-                setError(err);
+            let res = await login({ email, password })
+            if(res.success){
+                navigation.push('/', 'forward')
+            }
+            else{
+                setError(res);
                 return;
             }
         })

@@ -1,18 +1,12 @@
 import { IonAvatar, IonContent, IonHeader, IonPage, IonSpinner, IonText } from '@ionic/react'
 import Categories from '@/components/partials/categories';
-import Properties from '@/components/partials/properties';
 import { useAuth } from '@/lib/context/AuthContext';
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import DefaultProperties from '@/components/partials/properties/DefaultProperties';
+import PropertySectionSkeleton from '@/components/partials/properties/PropertySectionSkeleton';
+import { useEffect } from 'react';
 
 const Home: React.FC = () => {
+  // const { loading, authState, error } = useAuth()
   const { loading, authState, error } = useAuth()
   const styleSheet = {
     header: {
@@ -27,13 +21,17 @@ const Home: React.FC = () => {
     }
   }
 
+  useEffect(()=>{
+    console.log(authState)
+  })
+
   return (
     <IonPage style={{ overflow: 'hidden' }}>
-      {loading && (
+      {/* {loading && (
       <div style={{ width:'100vw', height:'100vh', display:'flex', justifyContent:'center', alignItems:'center'}}>
         <IonSpinner className='mr-3 w-[34px] h-[34px] '></IonSpinner> 
         <span style={{ fontSize: 18, fontFamily: 'League Spartan, sans-serif' }}>Veuillez patienter...</span>
-      </div>)}
+      </div>)} */}
       {error && (
         <IonText>Une erreur est survenue</IonText>
       )}
@@ -41,32 +39,23 @@ const Home: React.FC = () => {
         <>
           <IonHeader style={styleSheet.header}>
             <span>Logo</span>
-            <DropdownMenu>
-              <DropdownMenuTrigger className='visited:border-0'>
-                {authState?.user?.profilePic ?
-                        <img src={authState.user?.profilePic} className='w-[36.4px] h-[36.4px] rounded-full' alt="Profile picture" />
-                        : authState?.user?.firstName && (
-                          <IonAvatar style={styleSheet.avatar}>
-                            <div style={{fontFamily: 'League Spartan, sans-serif', backgroundColor: authState?.user?.color }} className={`w-full h-full rounded-full text-[16px] text-white pt-1`}>
+            <div>
+                {authState.user?.profilePic ?
+                        <img src={authState.user?.profilePic} className='w-[32px] h-[32px] rounded-full' alt="Profile picture" />
+                        : authState.user?.firstName && (
+                          // <IonAvatar style={styleSheet.avatar}>
+                            <div style={{fontFamily: 'League Spartan, sans-serif', backgroundColor: authState?.user?.color }} className={`w-[32px] h-[32px] rounded-full text-center text-[18px] text-white pt-1`}>
                               {authState.user?.firstName[0].toUpperCase()}
                             </div>
-                          </IonAvatar>
+                          // {/* </IonAvatar> */}
                       )
                 }
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            </div>
           </IonHeader>
           <IonContent fullscreen>
             <Categories />
-            <Properties />
+            <DefaultProperties />
+            <PropertySectionSkeleton title='Recommandées pour vous' propertySkeletons={[...Array(5)]} />
           </IonContent>
         </>
       )}

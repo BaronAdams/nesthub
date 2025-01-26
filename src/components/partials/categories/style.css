@@ -12,12 +12,16 @@
     margin-left: 14px;
 }
   
-.image-container img {
+.image-container ion-img {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Pour que l'image prenne tout l'espace */
-    border-radius:8px;
+    --border-radius:8px;
   }
+  
+.image-container img{
+  border-radius:8px;
+}
 
 .image-overlay {
     position: absolute;
